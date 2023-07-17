@@ -65,6 +65,16 @@ public class InventoryController {
         return "redirect:/inventory/index";
     }
 
-
+    @GetMapping("/delete")
+    public String delete(@RequestParam(required = true) String name, Model model){
+        service.delete(name);
+        return "redirect:/inventory/index";
+//        var totalDependent = service.totalDependent(name);
+//        if (true){
+//        }
+//        model.addAttribute("name", name);
+//        model.addAttribute("totalDependent", totalDependent);
+//        return "inventory/delete-error";
+    }
 
 }
