@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head th:replace="~{layout ::head}"></head>
+<body>
+<header th:replace="~{layout ::header}"></header>
+<nav th:replace="~{layout ::navigation}"></nav>
+<main>
+
+  <form th:attr="action=${action}" method="post" th:object="${dto}">
+<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" >-->
+    <table>
+      <tbody>
+      <tr>
+        <td><label>Name*</label></td>
+        <td th:switch="${action}">
+          <div th:case="update" >
+            <input type="text" th:value="*{name}" disabled>
+            <input type="hidden" th:field="*{name}">
+          </div>
+          <div th:case="*" >
+            <input type="text" th:field="*{name}">
+            <div class="validation-error" th:errors="*{name}"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Stock*</label></td>
+        <td>
+          <input type="number" th:field="*{stock}">
+          <div class="validation-error" th:errors="*{stock}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Description</label></td>
+        <td>
+          <textarea th:field="*{description}"></textarea>
+          <div class="validation-error" th:errors="*{description}"></div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <button class="button-like" type="submit">Submit</button>
+    <a class="button-like" th:href="@{/inventory/index}">Back To Index</a>
+
+  </form>
+</main>
+<footer th:replace="~{layout ::footer}"></footer>
+
+</body>
