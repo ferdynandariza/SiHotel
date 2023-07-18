@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head th:replace="~{layout ::head}"></head>
+<body>
+<header th:replace="~{layout ::header(title='/ Room / ' + ${header.number})}"></header>
+<nav th:replace="~{layout ::navigation}"></nav>
+<main>
+  <div class="header-box">
+\      <table>
+        <tbody th:object="${header}">
+        <tr>
+          <td>Room Number</td>
+          <td>: <span th:text="*{number}"></span></td>
+        </tr>
+        <tr>
+          <td>Room Floor</td>
+          <td>: <span th:text="*{floor}"></span></td>
+        </tr>
+        <tr>
+          <td>Room Type</td>
+          <td>: <span th:text="*{type}"></span></td>
+        </tr>
+        <tr>
+          <td>Guest Limit</td>
+          <td>: <span th:text="*{guestLimit}"></span></td>
+        </tr>
+        </tbody>
+      </table>
+
+    <a class="button-like" th:href="@{/room/item/form(number=${header.number})}">
+      <i class="fas fa-plus"></i> Add New Item
+    </a>
+  </div>
+
+  <div class="data-grid">
+    <table>
+      <thead>
+      <tr>
+        <th>Action</th>
+        <th>Inventory</th>
+        <th>Stock</th>
+        <th>Quantity</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="row : ${table}" th:object="${row}">
+        <td>
+          <a class="button-like"
+             th:href="@{/room/item/remove(id=*{id})}"
+          >Remove</a>
+        </td>
+        <td>
+          <span th:text="*{inventory}"></span>
+        </td>
+        <td>
+          <span th:text="*{stock}"></span>
+        </td>
+        <td>
+          <span th:text="*{quantity}"></span>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="4">
+          <div class="pagination">
+            <div th:text="|Page ${currentPage} of ${totalPages}|"></div>
+            <div th:if="${totalPages != 0}">
+              <a th:each="loop:${#numbers.sequence(1, totalPages)}" class="button-like"
+                 th:href="@{/room/item(number=${number}, page=${loop})}" th:text="${loop}"></a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="modal">
+    <div class="pop-up">
+      <div><p>
+        Are you sure want to delete <span class="name"></span> room?</p></div>
+      <a class="button-like yes">Yes</a>
+      <a class="button-like cancel">Cancel</a>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{layout ::footer}"></footer>
+
+</body>

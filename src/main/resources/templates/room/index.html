@@ -2,11 +2,41 @@
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head th:replace="~{layout ::head}"></head>
 <body>
-<header th:replace="~{layout ::header}"></header>
+<header th:replace="~{layout ::header(title='/ Room')}"></header>
 <nav th:replace="~{layout ::navigation}"></nav>
 <main>
   <div>
-    <h2>Room</h2>
+    <form class="search-box" th:attr="action=@{/room}" method="get">
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <input type="text" name="number" th:value="${number}" placeholder="Room Number">
+          </td>
+          <td>
+            <select name="type" th:value="${type}">
+              <option th:value=null>Select Room Type</option>
+              <option th:each="option : ${T(com.hospitality.SiHotel.enumeration.RoomType).values()}"
+                      th:text="${option.label}"
+                      th:value="${option.name().toString()}"
+                      th:selected="${option.name() == type}">
+              </option>
+            </select>
+          </td>
+<!--          <td>-->
+<!--            <select name="status" th:value="${status}">-->
+<!--              <option th:value=null>Select Status</option>-->
+
+<!--            </select>-->
+<!--          </td>-->
+          <td>
+            <button type="submit">Search</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+
     <a class="button-like" th:href="@{/room/form}">
       <i class="fas fa-plus"></i> Add New Room
     </a>
@@ -29,30 +59,26 @@
       <tr th:each="row : ${table}" th:object="${row}">
         <td>
           <a class="button-like"
-             th:href="@{/room/form(name=*{number})}"
+             th:href="@{/room/form(number=*{number})}"
           >Edit</a>
-          <a class="button-like delete-button"
-             th:href="@{/room/delete(name=*{number})}"
-             th:attr="data-name=*{number}"
-          >Delete</a>
+          <a class="button-like"
+             th:href="@{/room/item(number=*{number})}"
+          >Item</a>
         </td>
         <td>
-          <a th:text="*{number}"></a>
+          <span th:text="*{number}"></span>
         </td>
         <td>
           <span th:text="*{floor}"></span>
         </td>
         <td>
-          <span th:text="*{type}"></span>
-        </td>
-        <td>
-          <span th:text="*{type}"></span>
+          <span th:text="*{T(com.hospitality.SiHotel.enumeration.RoomType).valueOf(type).label}"></span>
         </td>
         <td>
           <span th:text="*{guestLimit}"></span>
         </td>
         <td>
-          <span th:text="*{costPerDay}"></span>
+          <span th:text="*{#numbers.formatCurrency(costPerDay)}"></span>
         </td>
         <td>
           <span th:text="*{status}"></span>
@@ -61,7 +87,7 @@
       </tbody>
       <tfoot>
       <tr>
-        <td colspan="6">
+        <td colspan="7">
           <div class="pagination">
             <div th:text="|Page ${currentPage} of ${totalPages}|"></div>
             <div th:if="${totalPages != 0}">

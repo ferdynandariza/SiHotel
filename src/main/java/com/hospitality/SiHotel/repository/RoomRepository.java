@@ -22,7 +22,7 @@ public interface RoomRepository extends JpaRepository<Room, String> {
                 ''
             )
             FROM Room AS r
-            WHERE r.number LIKE %:number%
+            WHERE (r.number LIKE %:number% OR :number IS NULL)
                 AND (r.type = :type OR :type IS NULL OR :type = '')
             """)
     public Page<RoomRowDTO> getTable(@Param("number") String number,

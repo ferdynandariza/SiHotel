@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head th:replace="~{layout ::head}"></head>
+<body>
+<header th:replace="~{layout ::header(title='/ Room / Form')}"></header>
+<nav th:replace="~{layout ::navigation}"></nav>
+<main>
+
+  <form th:attr="action=${action}" method="post" th:object="${dto}">
+    <!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" >-->
+    <table>
+      <tbody>
+      <tr>
+        <td><label>Number*</label></td>
+        <td th:switch="${action}">
+          <div th:case="update" >
+            <input type="text" th:value="*{number}" disabled>
+            <input type="hidden" th:field="*{number}">
+          </div>
+          <div th:case="*" >
+            <input type="text" th:field="*{number}">
+            <div class="validation-error" th:errors="*{number}"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Floor*</label></td>
+        <td>
+          <input type="number" th:field="*{floor}">
+          <div class="validation-error" th:errors="*{floor}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Type*</label></td>
+        <td>
+          <select th:field="*{type}">
+            <option th:value=null>Select Room Type</option>
+            <option th:each="option : ${T(com.hospitality.SiHotel.enumeration.RoomType).values()}"
+                    th:text="${option.label}"
+                    th:value="${option.name()}"
+                    th:selected="${option.name() == type}">
+            </option>
+          </select>
+          <div class="validation-error" th:errors="*{type}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Guest Limit*</label></td>
+        <td>
+          <input type="number" th:field="*{guestLimit}">
+          <div class="validation-error" th:errors="*{guestLimit}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Cost*</label></td>
+        <td>
+          <input type="number" th:field="*{cost}">
+          <div class="validation-error" th:errors="*{cost}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Description</label></td>
+        <td>
+          <textarea th:field="*{description}"></textarea>
+          <div class="validation-error" th:errors="*{description}"></div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <button class="button-like" type="submit">Submit</button>
+    <a class="button-like" th:href="@{/room/index}">Back To Index</a>
+
+  </form>
+</main>
+<footer th:replace="~{layout ::footer}"></footer>
+
+</body>

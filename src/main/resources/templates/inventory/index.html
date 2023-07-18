@@ -2,11 +2,10 @@
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head th:replace="~{layout ::head}"></head>
 <body>
-<header th:replace="~{layout ::header}"></header>
+<header th:replace="~{layout ::header(title='/ Inventory')}"></header>
 <nav th:replace="~{layout ::navigation}"></nav>
 <main>
     <div>
-        <h2>Inventory</h2>
         <a class="button-like" th:href="@{/inventory/form}">
             <i class="fas fa-plus"></i> Add New Inventory
         </a>

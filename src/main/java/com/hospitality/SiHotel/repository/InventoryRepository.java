@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, String> {
 
@@ -20,4 +22,10 @@ public interface InventoryRepository extends JpaRepository<Inventory, String> {
             FROM Inventory AS i
             """)
     public Page<InventoryRowDTO> getTable(Pageable pageable);
+
+    @Query("""
+            SELECT i.name
+            FROM Inventory AS i
+            """)
+    public List<String> getDropdown();
 }
