@@ -176,6 +176,10 @@ input[type="checkbox"]{
     padding: 16px;
     border: solid #57606a 1px;
 }
+.header-box td{
+    vertical-align: top;
+}
+
 footer{
     grid-area: footer;
     font-size: small;

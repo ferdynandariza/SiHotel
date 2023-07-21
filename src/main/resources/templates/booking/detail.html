@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head th:replace="~{layout ::head}"></head>
+<body>
+<header th:replace="~{layout ::header(title='/ Booking / ' + ${number})}"></header>
+<nav th:replace="~{layout ::navigation}"></nav>
+<main>
+  <div class="header-box">
+    <table>
+    <tbody th:object="${detail}">
+    <tr>
+      <td>Room Number</td>
+      <td>: <span th:text="*{number}"></span></td>
+    </tr>
+    <tr>
+      <td>Room Floor</td>
+      <td>: <span th:text="*{floor}"></span></td>
+    </tr>
+    <tr>
+      <td>Room Type</td>
+      <td>: <span th:text="*{type}"></span></td>
+    </tr>
+    <tr>
+      <td>Guest Limit</td>
+      <td>: <span th:text="*{guestLimit}"></span></td>
+    </tr>
+    <tr>
+      <td>Cost</td>
+      <td>: <span th:text="*{#numbers.formatCurrency(cost)}"></span></td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>:</td>
+    </tr>
+    <tr>
+      <td colspan="2"> <span th:text="*{description}"></span></td>
+    </tr>
+    </tbody>
+  </table>
+
+  </div>
+  <a class="button-like" th:href="@{/booking/reserve-form(room=${number})}">
+    Make Reservation
+  </a>
+  <a class="button-like" th:href="@{/booking}">
+    Cancel
+  </a>
+
+</main>
+<footer th:replace="~{layout ::footer}"></footer>
+
+</body>

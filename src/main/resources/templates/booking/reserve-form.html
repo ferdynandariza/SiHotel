@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head th:replace="~{layout ::head}"></head>
+<body>
+<header th:replace="~{layout ::header(title='/ Reservation')}"></header>
+<nav th:replace="~{layout ::navigation}"></nav>
+<main>
+  <div class="header-box">
+    <table>
+      <tbody th:object="${detail}">
+      <tr>
+        <td>Room Number</td>
+        <td>: <span th:text="*{number}"></span></td>
+      </tr>
+      <tr>
+        <td>Room Floor</td>
+        <td>: <span th:text="*{floor}"></span></td>
+      </tr>
+      <tr>
+        <td>Room Type</td>
+        <td>: <span th:text="*{type}"></span></td>
+      </tr>
+      <tr>
+        <td>Guest Limit</td>
+        <td>: <span th:text="*{guestLimit}"></span></td>
+      </tr>
+      <tr>
+        <td>Cost per Night</td>
+        <td>: <span class="costPerNight" th:attr="data-cost=*{cost}" th:text="*{#numbers.formatCurrency(cost)}"></span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <form action="reserve" method="post" th:object="${dto}">
+    <!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" >-->
+    <input type="hidden" th:field="*{roomNumber}">
+    <input type="hidden" th:field="*{guestUsername}">
+    <table>
+      <tbody>
+      <tr>
+        <td><label>Check In</label></td>
+        <td>
+          <input type="datetime-local" th:field="*{checkIn}">
+          <div class="validation-error" th:errors="*{checkIn}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Check Out</label></td>
+        <td>
+          <input type="datetime-local" th:field="*{checkOut}">
+          <div class="validation-error" th:errors="*{checkOut}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Total Cost</label></td>
+        <td>
+          <span class="totalCost">0</span>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Payment Method</label></td>
+        <td>
+          <input type="text" th:field="*{paymentMethod}">
+          <div class="validation-error" th:errors="*{paymentMethod}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Remark</label></td>
+        <td>
+          <textarea th:field="*{remark}"></textarea>
+          <div class="validation-error" th:errors="*{remark}"></div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <button class="button-like" type="submit">Add</button>
+    <a class="button-like" th:href="@{/booking/detail(number=${dto.roomNumber})}">Close</a>
+
+  </form>
+</main>
+<footer th:replace="~{layout ::footer}"></footer>
+
+</body>

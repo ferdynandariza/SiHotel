@@ -30,8 +30,8 @@ public class MvcConfiguration implements WebMvcConfigurer {
         registry.addViewController("/inventory").setViewName("forward:/inventory/index");
         registry.addViewController("/room-service").setViewName("forward:/room-service/index");
         registry.addViewController("/reservation").setViewName("forward:/reservation/index");
-        registry.addViewController("/booking").setViewName("forward:/admin/index");
-        registry.addViewController("/my-room").setViewName("forward:/admin/index");
+        registry.addViewController("/booking").setViewName("forward:/booking/index");
+        registry.addViewController("/my-room").setViewName("forward:/my-room/index");
 
     }
 

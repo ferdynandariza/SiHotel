@@ -1,14 +1,11 @@
 package com.hospitality.SiHotel.service;
 
-import com.hospitality.SiHotel.dto.inventory.InsertInventoryDTO;
-import com.hospitality.SiHotel.dto.inventory.InventoryRowDTO;
-import com.hospitality.SiHotel.dto.inventory.UpdateInventoryDTO;
 import com.hospitality.SiHotel.dto.room.*;
-import com.hospitality.SiHotel.entity.Inventory;
 import com.hospitality.SiHotel.entity.Room;
 import com.hospitality.SiHotel.entity.RoomInventory;
 import com.hospitality.SiHotel.enumeration.RoomType;
 import com.hospitality.SiHotel.repository.InventoryRepository;
+import com.hospitality.SiHotel.repository.ReservationRepository;
 import com.hospitality.SiHotel.repository.RoomInventoryRepository;
 import com.hospitality.SiHotel.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,11 +29,21 @@ public class RoomService {
     @Autowired
     InventoryRepository inventoryRepository;
 
+    @Autowired
+    ReservationRepository reservationRepository;
+
     private final Integer rowPerPage = 10;
 
     public Page<RoomRowDTO> getTable(String number, String type, Integer page) {
         Pageable pageable = PageRequest.of(page - 1, rowPerPage);
-        return roomRepository.getTable(number, type, pageable);
+        var table = roomRepository.getTable(number, type, pageable);
+        table.forEach(entity -> entity.setStatus(getRoomStatus(entity.getNumber())));
+        return table;
+    }
+
+    private String getRoomStatus(String number){
+        Integer counted = reservationRepository.countRoomReservation(number, LocalDateTime.now());
+        return counted > 0 ? "Unavailable" : "Available";
     }
 
     public Room save(InsertRoomDTO dto){
