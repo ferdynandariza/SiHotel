@@ -141,6 +141,10 @@ input, textarea, select{
     border: solid #57606a 1px;
     accent-color: black;
 }
+input[type="time"]{
+    width:80px;
+    text-align: center;
+}
 textarea{
     height:100px;
     resize: none;

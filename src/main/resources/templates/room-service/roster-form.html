@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head th:replace="~{layout ::head}"></head>
+<body>
+<header th:replace="~{layout ::header(title='/ Room Service / Roster / Form')}"></header>
+<nav th:replace="~{layout ::navigation}"></nav>
+<main>
+
+  <form th:attr="action=${action}" method="post" th:object="${dto}">
+    <!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" >-->
+    <table>
+      <tbody>
+      <input type="hidden" th:field="*{employeeNumber}">
+      <tr>
+        <td><label>Monday</label></td>
+        <td>
+          <input type="time" th:field="*{mondayRosterStart}">
+          <div class="validation-error" th:errors="*{mondayRosterStart}"></div>
+        </td>
+        <td>-</td>
+        <td>
+          <input type="time" th:field="*{mondayRosterFinish}">
+          <div class="validation-error" th:errors="*{mondayRosterFinish}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Tuesday</label></td>
+        <td>
+          <input type="time" th:field="*{tuesdayRosterStart}">
+          <div class="validation-error" th:errors="*{tuesdayRosterStart}"></div>
+        </td>
+        <td>-</td>
+        <td>
+          <input type="time" th:field="*{tuesdayRosterFinish}">
+          <div class="validation-error" th:errors="*{tuesdayRosterFinish}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Wednesday</label></td>
+        <td>
+          <input type="time" th:field="*{wednesdayRosterStart}">
+          <div class="validation-error" th:errors="*{wednesdayRosterStart}"></div>
+        </td>
+        <td>-</td>
+        <td>
+          <input type="time" th:field="*{wednesdayRosterFinish}">
+          <div class="validation-error" th:errors="*{wednesdayRosterFinish}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Thursday</label></td>
+        <td>
+          <input type="time" th:field="*{thursdayRosterStart}">
+          <div class="validation-error" th:errors="*{thursdayRosterStart}"></div>
+        </td>
+        <td>-</td>
+        <td>
+          <input type="time" th:field="*{thursdayRosterFinish}">
+          <div class="validation-error" th:errors="*{thursdayRosterFinish}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Friday</label></td>
+        <td>
+          <input type="time" th:field="*{fridayRosterStart}">
+          <div class="validation-error" th:errors="*{fridayRosterStart}"></div>
+        </td>
+        <td>-</td>
+        <td>
+          <input type="time" th:field="*{fridayRosterFinish}">
+          <div class="validation-error" th:errors="*{fridayRosterFinish}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Saturday</label></td>
+        <td>
+          <input type="time" th:field="*{saturdayRosterStart}">
+          <div class="validation-error" th:errors="*{saturdayRosterStart}"></div>
+        </td>
+        <td>-</td>
+        <td>
+          <input type="time" th:field="*{saturdayRosterFinish}">
+          <div class="validation-error" th:errors="*{saturdayRosterFinish}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Sunday</label></td>
+        <td>
+          <input type="time" th:field="*{sundayRosterStart}">
+          <div class="validation-error" th:errors="*{sundayRosterStart}"></div>
+        </td>
+        <td>-</td>
+        <td>
+          <input type="time" th:field="*{sundayRosterFinish}">
+          <div class="validation-error" th:errors="*{sundayRosterFinish}"></div>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+
+    <button class="button-like" type="submit">Save Update</button>
+
+  </form>
+</main>
+<footer th:replace="~{layout ::footer}"></footer>
+
+</body>

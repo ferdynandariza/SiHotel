@@ -74,8 +74,8 @@ public class RoomService {
         );
     }
 
-    public void delete(String name){
-        roomRepository.deleteById(name);
+    public void delete(String number){
+        roomRepository.deleteById(number);
     }
 
 

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head th:replace="~{layout ::head}"></head>
+<body>
+<header th:replace="~{layout ::header(title='/ Room')}"></header>
+<nav th:replace="~{layout ::navigation}"></nav>
+<main>
+  <div>
+    <form class="search-box" th:attr="action=@{/room-service}" method="get">
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <input type="text" name="number" th:value="${number}" placeholder="Employee Number">
+          </td>
+          <td>
+            <input type="text" name="name" th:value="${name}" placeholder="Employee Name">
+          </td>
+          <td>
+            <button type="submit">Search</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+
+    <a class="button-like" th:href="@{/room-service/form}">
+      <i class="fas fa-plus"></i> Add New Room Service
+    </a>
+  </div>
+
+  <div class="data-grid">
+    <table>
+      <thead>
+      <tr>
+        <th>Action</th>
+        <th>Number</th>
+        <th>Full Name</th>
+        <th>Outsourcing Company</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="row : ${table}" th:object="${row}">
+        <td>
+          <a class="button-like"
+             th:href="@{/room-service/form(number=*{employeeNumber})}"
+          >Edit</a>
+          <a class="button-like"
+             th:href="@{/room-service/roster(number=*{employeeNumber})}"
+          >Roster</a>
+        </td>
+        <td>
+          <span th:text="*{employeeNumber}"></span>
+        </td>
+        <td>
+          <span th:text="*{fullName}"></span>
+        </td>
+        <td>
+          <span th:text="*{outsourcingCompany}"></span>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="4">
+          <div class="pagination">
+            <div th:text="|Page ${currentPage} of ${totalPages}|"></div>
+            <div th:if="${totalPages != 0}">
+              <a th:each="loop:${#numbers.sequence(1, totalPages)}" class="button-like"
+                 th:href="@{/room-service/index(page=${loop})}" th:text="${loop}"></a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="modal">
+    <div class="pop-up">
+      <div><p>
+        Are you sure want to delete <span class="name"></span> room-service?</p></div>
+      <a class="button-like yes">Yes</a>
+      <a class="button-like cancel">Cancel</a>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{layout ::footer}"></footer>
+
+</body>

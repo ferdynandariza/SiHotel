@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head th:replace="~{layout ::head}"></head>
+<body>
+<header th:replace="~{layout ::header(title='/ Room Service / Form')}"></header>
+<nav th:replace="~{layout ::navigation}"></nav>
+<main>
+
+  <form th:attr="action=${action}" method="post" th:object="${dto}">
+    <!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" >-->
+    <table>
+      <tbody>
+      <tr>
+        <td><label>Employee Number*</label></td>
+        <td th:switch="${action}">
+          <div th:case="update" >
+            <input type="text" th:value="*{employeeNumber}" disabled>
+            <input type="hidden" th:field="*{employeeNumber}">
+          </div>
+          <div th:case="*" >
+            <input type="text" th:field="*{employeeNumber}">
+            <div class="validation-error" th:errors="*{employeeNumber}"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>First Name*</label></td>
+        <td>
+          <input type="text" th:field="*{firstName}">
+          <div class="validation-error" th:errors="*{firstName}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Middle Name</label></td>
+        <td>
+          <input type="text" th:field="*{middleName}">
+          <div class="validation-error" th:errors="*{middleName}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Last Name</label></td>
+        <td>
+          <input type="text" th:field="*{lastName}">
+          <div class="validation-error" th:errors="*{lastName}"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Outsourcing Company</label></td>
+        <td>
+          <input type="text" th:field="*{outsourcingCompany}">
+          <div class="validation-error" th:errors="*{outsourcingCompany}"></div>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+
+    <button class="button-like" type="submit">Submit</button>
+    <a class="button-like" th:href="@{/room-service/index}">Back To Index</a>
+
+  </form>
+</main>
+<footer th:replace="~{layout ::footer}"></footer>
+
+</body>
